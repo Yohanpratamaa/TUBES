@@ -8,9 +8,8 @@
                 </div>
                 
                 <!-- Chat Content Placeholder -->
-                <div class="col-md-8">
-                    <!-- Placeholder for chat content -->
-                    <livewire:chat.chat-box>
+                <div class="col-md-8 d-flex justify-content-center align-items-center">
+                    <h4 class="font-medium text-lg"> Choose a conversation to start chatting :) </h4>
                 </div>
             </div>
         </div>

@@ -25,6 +25,10 @@
     {{-- Body --}}
     <main class="flex flex-col gap-3 p-2.5 overflow-y-auto flex-grow overscroll-contain overflow-x-hidden w-full my-auto">
 
+        @if ($loadedMessages)
+
+        @foreach ($loadedMessages as $message)
+
         <div @class([
             'max-w-[80%] md:max-w-[70%] flex w-auto gap-2 relative mt-2',
             'mr-auto'
@@ -44,9 +48,9 @@
                 'rounded-br-none bg-blue-500/80 text-white'=>true
                 ])>
 
-                <p class="whitespace-normal truncate text-sm md:text-base tracking-wide lg:tracking-normal">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur recusandae illum a perspiciatis officia.
-                </p>
+                    <p class="whitespace-normal truncate text-sm md:text-base tracking-wide lg:tracking-normal">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla dicta minima eos porro exercitationem ipsa nisi, perferendis repudiandae optio nesciunt totam consequuntur consequatur pariatur iusto quis dolor impedit! Ipsam, reprehenderit!
+                    </p>
 
                 <div class="ml-auto flex gap-2">
 
@@ -86,40 +90,49 @@
                     </div>
 
 
-
-
-
-
                 </div>
 
-            </div>
-            
+            </div>    
         </div>
+
+
+        @endforeach
+        @endif
     </main>
 
     {{-- Send Message --}}
     <footer class="shrink-0 z-12 bg-white inset-x-0">
         <div class=" p-2 border-t">
 
-            <form method="POST" autocapitalize="off">
-               @csrf
-
-               <input type="hidden" autocomplete="false" style="display:none">
-
-               <div class="grid grid-cols-12">
-                    <input 
-                           type="text"
-                           autocomplete="off"
-                           autofocus
-                           placeholder="Write your message here"
-                           maxlength="1700"
-                           class="col-span-10 bg-gray-100 border-0 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg  focus:outline-none"
-                    >
-                    <button class="col-span-2" type='submit'> Send </button>
-
-               </div>
-
-           </form>
+            <form 
+            x-data="{body: @entangle('body').defer}"
+            @submit.prevent="$wire.sendMessage"
+            method="POST" autocapitalize="off">
+            @csrf
+        
+            <input type="hidden" autocomplete="false" style="display:none">
+        
+            <div class="grid grid-cols-12">
+                <!-- Input Field -->
+                <input 
+                    x-model="body"
+                    type="text"
+                    autocomplete="off"
+                    autofocus
+                    placeholder="Write your message here"
+                    maxlength="1700"
+                    class="col-span-10 bg-gray-100 border-0 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg focus:outline-none"
+                >
+        
+                <!-- Button -->
+                <button 
+                    x-bind:disabled="!body.trim()" 
+                    class="col-span-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300"
+                    type="submit"> 
+                    Send 
+                </button>
+            </div>
+        </form>
 
            @error('body')
            <p> {{$message}} </p>

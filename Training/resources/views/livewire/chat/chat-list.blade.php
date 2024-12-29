@@ -1,4 +1,27 @@
-<div x-data="{type: 'all'}" class="flex flex-col transition-all h-full overflow-hidden">
+<div 
+    x-data="{type:'all',query:@entangle('query')}"
+    x-init="
+    
+    setTimeout(()=>{
+
+    conversationElement = document.getElementById('conversation-'+query);
+
+
+    //scroll to the element
+
+    if(conversationElement)
+    {
+
+        conversationElement.scrollIntoView({'behavior':'smooth'});
+
+    }
+
+    },200);
+    
+    "
+
+
+class="flex flex-col transition-all h-full overflow-hidden">
     
     <header class="px-3 z-10 bg-white sticky top-0 w-full py-2">
 
@@ -33,7 +56,7 @@
 
     </header>
 
-    <main class="{{ count($conversations) > 5 ? 'overflow-hidden overflow-y-scroll' : 'no-scrollbar' }} grow h-full relative" style="contain:content">
+    <main class="'overflow-hidden overflow-y-scroll grow h-full relative" style="contain:content">
 
         {{-- chatlist  --}}
 
@@ -47,7 +70,7 @@
             id="conversation-{{$conversation->id}}" wire:key="{{$conversation->id}}"
             class="py-3 hover:bg-gray-50 rounded-2xl dark:hover:bg-gray-100/70 transition-colors duration-150 flex gap-4 relative w-full cursor-pointer px-2 {{$conversation->id==$selectedConversation?->id ? 'bg-gray-100/70':''}}">
                 <a href="" class="shrink-0">
-                    <x-avatar src="https://source.unsplash.com/500x500?face-{{$key}}"/>
+                    <x-avatar src="https://picsum.photos/500/500?random-{{$key}}"/>
                 </a>
 
                 <aside class=" grid grid-cols-12 w-full">
