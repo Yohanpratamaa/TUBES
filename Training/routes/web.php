@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Chat\Chat;
 use App\Livewire\Chat\Index;
 use App\Livewire\Users;
+use App\Http\Controllers\PostController;
 
+Route::resource('posts', PostController::class);
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,6 +24,10 @@ Route::get('/mentor', function () {
 Route::get('/forum', function () {
     return view('forum');
 })->middleware(['auth', 'verified'])->name('forum');
+
+Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
+Route::get('/forum/create', [ForumController::class, 'create'])->name('forum.create');
 
 Route::get('/friend', function () {
     return view('friend');
