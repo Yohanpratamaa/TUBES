@@ -6,6 +6,9 @@ use App\Livewire\Chat\Chat;
 use App\Livewire\Chat\Index;
 use App\Livewire\Users;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\MentorController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 
 Route::resource('posts', PostController::class);
 
@@ -47,6 +50,16 @@ Route::middleware('auth')->group(function (){
     
 
 });
+
+Route::get('/mentors', [MentorController::class, 'index'])->name('mentors.index');
+
+// Cart routes
+Route::resource('cart', CartController::class)->only(['index', 'store', 'destroy']);
+
+// Payment routes
+Route::get('checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+Route::post('checkout', [PaymentController::class, 'store'])->name('payment.store');
+
 require __DIR__.'/auth.php';
 
 
