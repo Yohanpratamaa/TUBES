@@ -44,7 +44,7 @@
                             <x-dropdown-link :href="route('users')">
                                 {{ __('Users') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('chat.index')">
+                            <x-dropdown-link :href="route('index')">
                                 {{ __('Message') }}
                             </x-dropdown-link>
                         </x-slot>
