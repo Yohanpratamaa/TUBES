@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Livewire\Chat;
+namespace App\Http\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Models\Message;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth; // Pastikan Facade Auth diimpor
 
 class Chat extends Component
 {
@@ -16,16 +15,19 @@ class Chat extends Component
     public function mount()
     {
 
-
-        $this->selectedConversation= Conversation::find($this->query);
+        $this->selectedConversation= Conversation::findOrFail($this->query);
+       /// dd($selectedConversation);
 
 
        #mark message belogning to receiver as read 
        Message::where('conversation_id',$this->selectedConversation->id)
-                ->where('receiver_id',Auth::id())
+                ->where('receiver_id',auth()->id())
                 ->whereNull('read_at')
                 ->update(['read_at'=>now()]);
+
+
     }
+
 
     public function render()
     {
