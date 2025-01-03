@@ -171,8 +171,8 @@
                                 <div class="forum-section">
                                     <div class="forum-header">
                                         <input type="text" placeholder="Search Forum Name">
-                                        <select class="mx-5">
-                                            <option value="all" class="mx-2">All Type</option>
+                                        <select class="pl-5">
+                                            <option value="all">All Type</option>
                                         </select>
                                         <a href="/forum-create"><button>Create Forum +</button></a>
                                     </div>

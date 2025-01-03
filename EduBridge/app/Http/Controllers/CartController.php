@@ -11,7 +11,7 @@ class CartController extends Controller
     public function index()
     {
         $cartItems = Cart::with('mentor')->get();
-        return view('cart.index', compact('cartItems'));
+        return view('cart', compact('cartItems'));
     }
 
     public function store(Request $request)

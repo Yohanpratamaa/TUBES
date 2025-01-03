@@ -12,18 +12,7 @@ use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MentorController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,10 +21,6 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/mentor', function () {
-    return view('mentor');
-})->middleware(['auth', 'verified'])->name('mentor');
 
 
 Route::middleware('auth')->group(function () {
@@ -67,14 +52,38 @@ Route::middleware('auth')->group(function (){
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
     Route::get('/forum-read', [ForumController::class, 'read'])->name('forum.read');
-    Route::get('/forum/{id}/update', [ForumController::class, 'edit'])->name('forum.update');
+    Route::get('/forum-update/{id}/update', [ForumController::class, 'edit'])->name('forum.update');
     Route::put('/forum/{id}/update', [ForumController::class, 'update'])->name('forum.update.save');
     Route::get('/forum-create', [ForumController::class, 'create'])->name('forum.create');
     Route::get('/forum/create', [ThreadController::class, 'create'])->name('thread.create');
     Route::post('/forum/store', [ThreadController::class, 'store'])->name('thread.store');
     Route::get('/forum-create', function () {return view('forum.forum-create');});
     Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
-    Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
     Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::controller(PaymentController::class)->group(function () {
+        Route::get('/payment', 'checkout')->name('payment.checkout');
+        Route::post('/payment', 'store')->name('payment.store');
+        Route::get('/receipt', 'receipt')->name('payment.receipt');
+        Route::get('/receipt/{id}', 'receipt')->name('payment.receipt.detail');
+    });
+});
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/find-mentor', [MentorController::class, 'index'])->name('find-mentor');
+    Route::post('/mentor/store', [MentorController::class, 'store'])->name('mentor.store');
+    Route::delete('/mentor/{id}', [MentorController::class, 'destroy'])->name('mentor.destroy');
+
+    Route::get('/mentors/{id}', [MentorController::class, 'show'])->name('mentors.show');
+    Route::post('/mentors/{id}', [MentorController::class, 'update'])->name('mentors.update');
+    Route::delete('/mentors/{id}', [MentorController::class, 'destroy'])->name('mentors.destroy');
+
+    Route::post('/mentors', [MentorController::class, 'store'])->name('mentors.store');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::get('/history', [NavigationController::class, 'history'])->name('history');
 });

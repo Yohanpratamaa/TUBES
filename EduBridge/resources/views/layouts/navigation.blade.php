@@ -9,18 +9,19 @@
                         <img src="images/Logo.png" alt="" style="width: 80px">
                     </a>
                 </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('mentor')" :active="request()->routeIs('mentor')">
-                        {{ __('Find Mentor') }}
-                    </x-nav-link>
-                </div>
                 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('users.friend')" :active="request()->routeIs('users.friend')">
                         {{ __('Find Friend') }}
                     </x-nav-link>
                 </div>
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('find-mentor')" :active="request()->routeIs('find-mentor')">
+                        {{ __('Find Mentor') }}
+                    </x-nav-link>
+                </div>
+                
 
                 <div class="hidden mt-md-3 space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <!-- Chat Dropdown -->
