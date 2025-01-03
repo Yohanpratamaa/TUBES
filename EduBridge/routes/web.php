@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function (){
 });
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Route::middleware('auth')->group(function () {
     Route::get('/forum-read', [ForumController::class, 'read'])->name('forum.read');
     // Route::get('/forum-update', [ForumController::class, 'update'])->name('forum.update');
@@ -90,6 +91,8 @@ Route::middleware('auth')->group(function () {
     // Route::get('/forum/create', [ForumController::class, 'create'])->name('forum.create');
 });
 =======
+=======
+>>>>>>> Stashed changes
 Route::controller(NavigationController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/find-mentor', 'findMentor')->name('find-mentor');
@@ -129,4 +132,7 @@ Route::controller(MentorController::class)->group(function () {
 
 });
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
