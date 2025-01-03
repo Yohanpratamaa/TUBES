@@ -6,6 +6,9 @@ use App\Http\Livewire\Chat\Index;
 use App\Http\Livewire\Users;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ForumController;
+use App\Http\Controllers\ThreadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,22 @@ use App\Http\Controllers\UserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::resource('forums', ForumController::class);
+Route::get('/forum-read', [ForumController::class, 'read'])->name('forum.read');
+// Route::get('/forum-update', [ForumController::class, 'update'])->name('forum.update');
+// Route::get('/forum/{id}/update', [ForumController::class, 'edit'])->name('forum.update');
+Route::get('/forum/{id}/update', [ForumController::class, 'edit'])->name('forum.update');
+Route::put('/forum/{id}/update', [ForumController::class, 'update'])->name('forum.update.save');
+Route::get('/forum-create', [ForumController::class, 'create'])->name('forum.create');
+Route::get('/forum/create', [ThreadController::class, 'create'])->name('thread.create');
+Route::post('/forum/store', [ThreadController::class, 'store'])->name('thread.store');
+Route::get('/forum-create', function () {return view('forum.forum-create');});
+Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
+Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
+// Route::get('/forum/create', [ForumController::class, 'create'])->name('forum.create');
+
 
 Route::get('/', function () {
     return view('welcome');

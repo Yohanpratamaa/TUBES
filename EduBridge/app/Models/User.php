@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
@@ -73,4 +74,20 @@ class User extends Authenticatable
             ->wherePivot('status', 'accepted');
     }
 
+}
+
+class Forum extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'content',
+    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    protected $table = 'forums';
 }
