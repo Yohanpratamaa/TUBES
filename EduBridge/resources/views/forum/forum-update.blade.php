@@ -75,25 +75,8 @@
     </style>
 </head>
 <body>
+    <x-app-layout>
     <div class="container">
-        <header>
-            <div class="d-flex justify-content-between align-items-center py-2">
-                <div>
-                    <img src="/image/logo-edubridge.png" alt="Edu Bridge Logo">
-                </div>
-                <nav>
-                    <a href="/dashboard" class="px-3">Dashboard</a>
-                    <a href="/find-mentor" class="px-3">Find Mentor</a>
-                    <a href="/chat" class="px-3">Chat</a>
-                    <a href="/forum" class="px-3 fw-bold">Forum</a>
-                    <a href="/find-friend" class="px-3">Find Friend</a>
-                </nav>
-                <div class="user">
-                    Yohan Artha Pratama
-                </div>
-            </div>
-        </header>
-        
         <main class="forum-topic">
             <h1>Update Thread</h1>
             <div class="thread-content">
@@ -128,5 +111,6 @@
             updateSection.classList.toggle('d-none');
         });
     </script>
+    </x-app-layout>
 </body>
 </html>

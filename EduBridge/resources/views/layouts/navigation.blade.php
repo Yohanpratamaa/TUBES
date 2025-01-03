@@ -5,18 +5,22 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="/">
                         <img src="images/Logo.png" alt="" style="width: 80px">
                     </a>
                 </div>
-
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('mentor')" :active="request()->routeIs('mentor')">
                         {{ __('Find Mentor') }}
                     </x-nav-link>
                 </div>
-
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('users.friend')" :active="request()->routeIs('users.friend')">
+                        {{ __('Find Friend') }}
+                    </x-nav-link>
+                </div>
 
                 <div class="hidden mt-md-3 space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <!-- Chat Dropdown -->
@@ -45,31 +49,11 @@
 
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('forum')" :active="request()->routeIs('forum')">
+                    <x-nav-link :href="route('forum.index')" :active="request()->routeIs('forum.index')">
                         {{ __('Forum') }}
                     </x-nav-link>
                 </div>
-
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('users.friend')" :active="request()->routeIs('users.friend')">
-                        {{ __('Find Friend') }}
-                    </x-nav-link>
-                </div>
             </div>
-
-             <!-- Navigation Links -->
-             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <!-- Dashboard -->
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
-                </x-nav-link>
-                <!-- Forum -->
-                <x-nav-link :href="route('forum.index')" :active="request()->routeIs('forum.index')">
-                    {{ __('Forum') }}
-                </x-nav-link>
-            </div>
-        </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

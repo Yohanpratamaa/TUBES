@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
 <div class="container">
     <h1>Forum</h1>
     <a href="{{ route('forums.create') }}" class="btn btn-primary mb-3">Tambah Forums</a>
@@ -14,4 +12,4 @@
         @endforeach
     </div>
 </div>
-@endsection
+</x-app-layout>

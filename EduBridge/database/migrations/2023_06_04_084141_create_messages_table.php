@@ -21,9 +21,6 @@ return new class extends Migration
             $table->unsignedBigInteger('receiver_id')->nullable();// or uuid()
             $table->foreign('receiver_id')->references('id')->on('users')->nullOnDelete();
 
-            // Media
-            $table->string('media_path')->nullable()->after('body');
-
 
             $table->timestamp('read_at')->nullable();
 
