@@ -34,7 +34,7 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('users')">
-                                {{ __('Users') }}
+                                {{ __('Friend') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('index')">
                                 {{ __('Message') }}
@@ -53,7 +53,7 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('users.friend')" :active="request()->routeIs('users.friend')">
-                        {{ __('Friend') }}
+                        {{ __('Find Friend') }}
                     </x-nav-link>
                 </div>
             </div>
