@@ -58,6 +58,19 @@
                 </div>
             </div>
 
+             <!-- Navigation Links -->
+             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <!-- Dashboard -->
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-nav-link>
+                <!-- Forum -->
+                <x-nav-link :href="route('forum.index')" :active="request()->routeIs('forum.index')">
+                    {{ __('Forum') }}
+                </x-nav-link>
+            </div>
+        </div>
+
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
