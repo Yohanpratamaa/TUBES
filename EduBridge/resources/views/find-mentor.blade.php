@@ -10,28 +10,6 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <!-- Header Section -->
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f4f4f4"> 
-    <div class="container-fluid">
-        <!-- Logo atau teks di kiri -->
-        <a class="navbar-brand text" href="#" style="color:rgb(8, 8, 8);">Find Mentor</a>
-        
-        <!-- Bagian ikon di kanan -->
-        <div class="d-flex align-items-center ms-auto gap-3">
-            <a href="{{ route('cart') }}" class="{{ request()->routeIs('cart') ? 'active-link' : '' }}">
-                <img src="images/shoppingcart.png" alt="Cart" width="50" style="padding-right: 20px;">
-            </a>
-            <style>
-                .active-link img {
-                    display: inline-block;
-                    border-bottom: 2px solid blue;
-                    padding-bottom: 2px;
-                    width: 50px;
-                }
-            </style>
-
-        </div>
-    </div>
-</nav>
 
 <div class="container my-4" style="background-color:rgb(254, 254, 254); min-height: 100vh; padding: 20px; border-radius: 30px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1)">
     @if(session('success'))
@@ -103,14 +81,93 @@
         </div>
     </div>
 
-        <!-- Filters -->
-        <!-- <div class="d-flex gap-4 my-3 flex-wrap">
-            <input type="text" class="form-control w-auto" placeholder="Search Here..." />
-            <button class="btn btn-outline-secondary">Price</button>
-            <button class="btn btn-outline-secondary">Price ($$)</button>
-            <button class="btn btn-outline-secondary">Subject</button>
-            <button class="btn btn-outline-secondary">Filters</button>
-        </div> -->
+        <!-- ... INOVASI ... -->
+
+<!-- Filters -->
+<div class="d-flex gap-4 my-3 flex-wrap">
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Urutkan Berdasarkan Update Terakhir
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+            <li><a class="dropdown-item sort-option" data-sort="asc" href="#">Terlama Diupdate</a></li>
+            <li><a class="dropdown-item sort-option" data-sort="desc" href="#">Terbaru Diupdate</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Mentor Cards -->
+<div id="mentor-cards" class="row">
+    @forelse ($mentors->sortByDesc('updated_at') as $mentor)
+        <div class="col-md-4 mb-4" data-updated="{{ $mentor->updated_at->timestamp }}">
+            <div class="card rounded-4 p-3 mentor-card" data-id="{{ $mentor->id }}" style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                <img src="{{ asset('images/' . $mentor->image) }}" class="card-img-top rounded-4" alt="{{ $mentor->skills }}">
+                <div class="card-body">
+                    <h6 class="text-muted mentor-name">{{ $mentor->name }}</h6>
+                    <p class="text-dark fw-bold mentor-skills">{{ $mentor->skills }}</p>
+                    <p class="text-purple fw-bold mentor-price">${{ number_format($mentor->price, 2) }}</p>
+                    <button class="btn btn-primary w-100" style="background-color: #BD9CFE; border-radius: 50px;">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    @empty
+        <p class="text-center">Tidak ada mentor tersedia.</p>
+    @endforelse
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Fungsi untuk mengurutkan card
+    function sortCards(direction) {
+        const cardsContainer = document.getElementById('mentor-cards');
+        const cards = Array.from(cardsContainer.children);
+
+        cards.sort((a, b) => {
+            const timeA = parseInt(a.dataset.updated);
+            const timeB = parseInt(b.dataset.updated);
+            
+            return direction === 'asc' ? timeA - timeB : timeB - timeA;
+        });
+
+        // Hapus semua card yang ada
+        cardsContainer.innerHTML = '';
+
+        // Tambahkan card yang sudah diurutkan
+        cards.forEach(card => {
+            cardsContainer.appendChild(card.cloneNode(true));
+        });
+
+        // Tambahkan kembali event listeners untuk setiap card
+        attachCardEventListeners();
+    }
+
+    // Fungsi untuk menambahkan event listeners ke card
+    function attachCardEventListeners() {
+        document.querySelectorAll('.mentor-card').forEach(card => {
+            card.addEventListener('click', function () {
+                const mentorId = this.getAttribute('data-id');
+                // ... kode event listener card yang sudah ada ...
+            });
+        });
+    }
+
+    // Event listener untuk opsi pengurutan
+    document.querySelectorAll('.sort-option').forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            const direction = this.dataset.sort;
+            sortCards(direction);
+            
+            // Update teks tombol dropdown
+            const buttonText = direction === 'asc' ? 'Terlama Diupdate' : 'Terbaru Diupdate';
+            document.getElementById('sortDropdown').textContent = buttonText;
+        });
+    });
+
+    // Inisialisasi event listeners untuk card
+    attachCardEventListeners();
+});
+</script>
 
         <!-- Mentor Cards -->
         <div id="mentor-cards" class="row">
@@ -216,54 +273,8 @@
                     }
                 });
         });
-    });
 </script>
 
-<!-- Detail Modal -->
-<!-- <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailModalLabel">Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="mentorId">
-                <div class="mb-3">
-                    <label for="detailImageFile" class="form-label">Upload Image</label>
-                    <input type="file" class="form-control" id="detailImageFile">
-                    <img id="detailImage" src="" alt="Preview Image" class="mt-3 img-fluid rounded">
-                </div>
-                <div class="mb-3">
-                    <label for="detailName" class="form-label">Mentor Name</label>
-                    <input type="text" class="form-control" id="detailName" required>
-                </div>
-                <div class="mb-3">
-                    <label for="detailSkills" class="form-label">Mentor Skills</label>
-                    <input type="text" class="form-control" id="detailSkills" required>
-                </div>
-                <div class="mb-3">
-                    <label for="detailPrice" class="form-label">Mentor Price</label>
-                    <input type="number" class="form-control" id="detailPrice" step="0.01" required>
-                </div>
-                <div class="mb-3">
-                    <label for="detailDescription" class="form-label">Deskripsi</label>
-                    <textarea class="form-control" id="detailDescription" rows="3" required></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveChanges">Edit Detail</button>
-                <button type="button" class="btn btn-danger" id="deleteMentor">Hapus Mentor</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
-        <!-- See More Button -->
-        <!-- <div class="text-center my-4">
-            <button class="btn btn-primary px-4 py-2 see-more-btn" style="background-color: #9D6BFF; border-radius: 50px; font-size: 18px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1)">See More..</button>
-        </div> -->
     </div>
 
 </div>
@@ -445,6 +456,3 @@
         </div>
     </div>
 </x-app-layout>
-
-
-

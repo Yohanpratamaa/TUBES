@@ -75,7 +75,55 @@
     </style>
 </head>
 <body>
+
     <x-app-layout>
+        <div class="container">
+            <main class="forum-topic">
+                <h1>Update Thread</h1>
+                <div class="thread-content">
+                    <p id="thread-text">{{ $forums->title }}</p>
+                    <button class="btn btn-primary" id="toggle-update">
+                        <img src="/image/Update-Toggle.png" alt="Update Thread" width="20">
+                        Update Thread
+                    </button>
+                </div>
+    
+                <div class="update-section mt-3" id="update-section">
+                    <form action="{{ route('forum.update', $forums->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <textarea name="title" rows="5" required>{{ $forums->title }}</textarea>
+                        <select name="type" required>
+                            <option value="PEMROGRAMAN" {{ $forums->type == 'PEMROGRAMAN' ? 'selected' : '' }}>PEMROGRAMAN</option>
+                            <option value="VISUALISASI" {{ $forums->type == 'VISUALISASI' ? 'selected' : '' }}>VISUALISASI</option>
+                            <option value="DATA & STATISTIK" {{ $forums->type == 'DATA & STATISTIK' ? 'selected' : '' }}>DATA & STATISTIK</option>
+                            <option value="BISNIS" {{ $forums->type == 'BISNIS' ? 'selected' : '' }}>BISNIS</option>
+                        </select>
+                        <button type="submit">Save Changes</button>
+                    </form>
+
+                    <h3>Edit Komentar</h3>
+                    <form action="{{ route('forum.update', $forums->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <textarea name="commentar" rows="3" required>{{ $forums->commentar }}</textarea>
+                        <button type="submit">Update Komentar</button>
+                    </form>
+                </div>
+            </main>
+        </div>
+    
+        <script>
+            const toggleButton = document.getElementById('toggle-update');
+            const updateSection = document.getElementById('update-section');
+    
+            toggleButton.addEventListener('click', () => {
+                updateSection.classList.toggle('d-none');
+            });
+        </script>
+        </x-app-layout>
+        
+    {{-- <x-app-layout>
     <div class="container">
         <main class="forum-topic">
             <h1>Update Thread</h1>
@@ -111,6 +159,6 @@
             updateSection.classList.toggle('d-none');
         });
     </script>
-    </x-app-layout>
+    </x-app-layout> --}}
 </body>
 </html>

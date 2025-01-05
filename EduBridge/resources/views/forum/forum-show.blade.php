@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Str;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,7 +137,7 @@
         }
 
         .badge.visualisasi {
-            background-color: #28a745;
+            background-color: #dd1d3d;
         }
 
         .badge.data-statistik {
@@ -141,7 +145,7 @@
         }
 
         .badge.bisnis {
-            background-color: #17a2b8;
+            background-color: #18b115;
         }
 
         .action {
@@ -157,7 +161,7 @@
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Find Mentor') }}
+                {{ __('Forum') }}
             </h2>
         </x-slot>
     
@@ -182,12 +186,45 @@
                                             <tr>
                                                 <th>Nama Forum</th>
                                                 <th>Dibuat Oleh</th>
-                                                <th>Komentar</th>
                                                 <th>Tipe Forum</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
+
                                         <tbody>
+                                            @foreach ($forums as $forum)
+                                            <tr>
+                                                <td>{{ $forum->nama_forum }}</td>
+                                                {{-- <td>{{ $forum->user->name }} <br> {{ $forum->created_at->format('d M Y') }}</td> --}}
+                                                <td>{{ $forum->nama_user }} <br> {{ $forum->created_at->format('d M Y') }}</td>
+                                                {{-- <td>
+                                                    @foreach ($forum->comments as $comment)
+                                                        <p>{{ $comment->content }}</p>
+                                                    @endforeach
+                                                </td> --}}
+                                                <td><span class="badge {{ strtolower($forum->typeforum) }}">{{ $forum->typeforum }}</span></td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a href="{{ route('forum.read', $forum->id) }}" class="action view">
+                                                            <img src="images\View-Toggle.png" alt="View" style="height: 25px; width: 25px;">
+                                                        </a>
+                                                        <a href="{{ route('forum.edit', $forum->id) }}" class="action edit">
+                                                            <img src="images\Update-Toggle.png" alt="Edit" style="height: 25px; width: 25px;">
+                                                        </a>
+                                                        <form action="{{ route('forum.destroy', $forum->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this forum?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="action delete">
+                                                                <img src="images\Trash-Toggle.png" alt="Delete" style="height: 25px; width: 25px;">
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                        {{-- <tbody>
                                             <tr>
                                                 <td>FrontEnd Developer</td>
                                                 <td>Yohan Artha Pratama <br> 02 Mei 2024</td>
@@ -392,7 +429,7 @@
                                                     </script>
                                                 </td>                            
                                             </tr>
-                                        </tbody>
+                                        </tbody> --}}
                                     </table>
                                 </div>
                             </main>

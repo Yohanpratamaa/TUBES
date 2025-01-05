@@ -11,12 +11,18 @@ class Forum extends Model
 
     protected $fillable = [
         'title',
-        'description',
+        'type',
         'content',
+        'namapengguna',
+        'user_id',
+        'nama_forum',
+        'nama_user',
+        'typeforum',
+        'commentar',
     ];
-    public function user()
+
+    public function comments()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Comment::class, 'forum_id');
     }
-    protected $table = 'forums';
 }

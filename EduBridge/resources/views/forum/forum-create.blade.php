@@ -54,38 +54,31 @@
 <body>
     <x-app-layout>
         <div class="container mt-5">
-            <h1>Create a New Thread</h1>
-            <form action="{{ route('thread.store') }}" method="POST" enctype="multipart/form-data">
+            <h1><b>CREATE A NEW FORUM</h1>
+            <form action="{{ route('forum.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label for="threadTitle" class="form-label"><b>* Thread Title</b></label>
-                    <input type="text" class="form-control" id="threadTitle" name="title" required>
+                    <label for="nama_forum" class="form-label">Nama Forum</label>
+                    <input type="text" class="form-control" id="nama_forum" name="nama_forum" required maxlength="255">
                 </div>
                 <div class="mb-3">
-                    <label for="threadType" class="form-label"><b>* Thread Type</b></label>
-                    <select class="form-control" id="threadType" name="type" required>
-                        <option value="Discussion">PEMROGRAMAN</option>
-                        <option value="Question">VISUALISASI</option>
-                        <option value="Question">DATA&STATISTIK</option>
-                        <option value="Announcement">BISNIS</option>
+                    <label for="nama_user" class="form-label">Nama User</label>
+                    <input type="text" class="form-control" id="nama_user" name="nama_user" required maxlength="120">
+                </div>
+                <div class="mb-3">
+                    <label for="typeforum" class="form-label">Type Forum</label>
+                    <select class="form-control" id="typeforum" name="typeforum" required>
+                        <option value="PEMROGRAMAN">PEMROGRAMAN</option>
+                        <option value="VISUALISASI">VISUALISASI</option>
+                        <option value="DATA & STATISTIK">DATA & STATISTIK</option>
+                        <option value="BISNIS">BISNIS</option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="content" class="form-label"><b>* Content</b></label>
-                    <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
-                    <script>
-                        CKEDITOR.replace('content');
-                    </script>
+                    <label for="commentar" class="form-label">Commentar</label>
+                    <textarea class="form-control" id="commentar" name="commentar" rows="5" required maxlength="1000"></textarea>
                 </div>
-                <div class="mb-3">
-                    <label for="attachFiles" class="form-label">Attach Files</label>
-                    <input type="file" class="form-control" id="attachFiles" name="files[]" multiple>
-                </div>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="subscribe" name="subscribe" value="1" checked>
-                    <label class="form-check-label" for="subscribe">Subscribe to this thread</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Create this thread</button>
+                <button type="submit" class="btn btn-primary">Create this Forum</button>
             </form>
         </div>
     </x-app-layout>

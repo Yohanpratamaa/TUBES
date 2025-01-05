@@ -52,16 +52,15 @@ Route::middleware('auth')->group(function (){
 });
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
-    Route::get('/forum-read', [ForumController::class, 'read'])->name('forum.read');
-    Route::get('/forum-update/{id}/update', [ForumController::class, 'edit'])->name('forum.update');
-    Route::put('/forum/{id}/update', [ForumController::class, 'update'])->name('forum.update.save');
+    Route::get('/forum-read/{id}', [ForumController::class, 'read'])->name('forum.read');
+    Route::get('/forum-update/{id}/edit', [ForumController::class, 'edit'])->name('forum.edit');
+    Route::put('/forum/{id}/update', [ForumController::class, 'update'])->name('forum.update');
+    Route::delete('/forum/{id}/destroy', [ForumController::class, 'destroy'])->name('forum.destroy');
+
     Route::get('/forum-create', [ForumController::class, 'create'])->name('forum.create');
-    Route::get('/forum/create', [ThreadController::class, 'create'])->name('thread.create');
-    Route::post('/forum/store', [ThreadController::class, 'store'])->name('thread.store');
-    Route::get('/forum-create', function () {return view('forum.forum-create');});
-    Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
-    Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
+    Route::post('/forum-store', [ForumController::class, 'store'])->name('forum.store');
 });
 
 Route::middleware('auth')->group(function () {
